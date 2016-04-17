@@ -806,7 +806,83 @@ page | <code>page number for paginated results</code>(integer)
 The POST data should be a json encoded string
 </aside>
 
-# Alexandria's No-Accounts Mining Pool
+# TradeBot
+
+## Get TradeBot Balance for Alexandria.io node
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.get
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get()
+```
+
+```shell
+curl "http://tradebot.alexandria.io/flobalance"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+90775.5660569
+```
+
+This endpoint retrieves the number of Florincoin tokens available for BTC-FLO trades on Alexandria.io's TradeBot node.
+
+### HTTP Request
+
+`GET http://tradebot.alexandria.io/flobalance`
+
+## Get A Bitcoin Address from Alexandria.io's TradeBot node
+
+```ruby
+require 'kittn'
+
+api = Kittn::APIClient.authorize!('meowmeowmeow')
+api.kittens.get
+```
+
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get()
+```
+
+```shell
+curl "http://tradebot.alexandria.io/depositaddress?floaddress={floaddress}&raw"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+"1LnAqVZo7eB3zYRmWFmyKCQWUAT73Nc36c"
+```
+
+This endpoint provides a Florincoin address and retreives a Bitcoin address for facilitating trading with Alexandria.io's TradeBot node.
+
+### HTTP Request
+
+`GET http://tradebot.alexandria.io/depositaddress?floaddress={floaddress}&raw`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+floaddress | "<code>florincoin receiving address for deposit from trade</code>"
+
+<aside class="success">
+Note — if you exclude <code>raw</code> from the endpoint, html code will be returned, including an <code>img src</code> of the QR code for the Bitcoin address.
+</aside>
+
+# No-Accounts Mining Pool
 
 ## Get Alexandria's Pool Stats
 
