@@ -3,7 +3,6 @@ title: API Reference
 
 language_tabs:
   - shell
-  - ruby
   - python
 
 toc_footers:
@@ -18,14 +17,14 @@ search: true
 
 # Introduction
 
-Welcome to the Alexandria API! You can use our API to access Alexandria.io API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Alexandria API! You can use our API to access Alexandria.io API endpoints, which can get info about Publishers and Artifacts in the Alexandria library, publish to the library, and retreive other information about Alexandria's networks and blockchain tokens.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings in Shell and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
 <aside class="notice">
-Follow these instructions to run install Daemons locally so you can run these APIs in a fully decentralized way instead of relying on "Trusted Third Parties"<code>meowmeowmeow</code>.
+Follow these instructions to run install Daemons locally so you can run these APIs in a fully decentralized way instead of relying on "Trusted Third Parties"<code>Download Librarian</code>.
 </aside>
 
 # Publishers
@@ -40,10 +39,10 @@ api.kittens.get
 ```
 
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('http://libraryd.alexandria.io/alexandria/v1/publisher/get/all')
+r.json()
 ```
 
 ```shell
@@ -91,15 +90,15 @@ api.kittens.get(2)
 ```
 
 ```python
-import kittn
+import requests, json
+payload = {'protocol': 'publisher', 'search-on': 'name', 'search-for': 'Imogen Heap'}
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+r = requests.post("http://libraryd.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
+print(r.text)
 ```
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+curl -X POST -H "Content-Type: application/json" --data '{"protocol":"publisher","search-on":"name","search-for":"Imogen Heap" }' http://libraryd.alexandria.io/alexandria/v1/search
 ```
 
 > The above command returns JSON structured like this:
@@ -168,8 +167,7 @@ api.kittens.get(2)
 ```
 
 ```shell
-curl "http://localhost:41289/alexandria/v1/sign"
-  -H "Authorization: meowmeowmeow"
+curl -X POST -H "Content-Type: application/json" --data '{"address":"FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH","text":"Imogen Heap-FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH-1443896107000" }' http://localhost:41289/alexandria/v1/sign
 ```
 
 > The above command returns JSON structured like this:
@@ -178,7 +176,7 @@ curl "http://localhost:41289/alexandria/v1/sign"
 {
     "status": "success",
     "response": [
-        "<code>signature</code>"
+        "H/7+wbTjR87fv2Qy96jp3oCfBdu9o/D5rzgA74UGSb/4f0iACwd/5YyehJ0y/uSaRwW3Tk6uT8x+OJZL3kro9hQ="
     ]
 }
 ```
@@ -219,8 +217,7 @@ api.kittens.get(2)
 ```
 
 ```shell
-curl "http://localhost:41289/alexandria/v1/send"
-  -H "Authorization: meowmeowmeow"
+curl -X POST -H "Content-Type: application/json" --data '{"alexandria-publisher":{"name":"Imogen Heap","address":"FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH","timestamp":1443896107000,"emailmd5":"06b762d6e133b3dee9a62575a3babf1f","bitmessage":""},"signature":"H/7+wbTjR87fv2Qy96jp3oCfBdu9o/D5rzgA74UGSb/4f0iACwd/5YyehJ0y/uSaRwW3Tk6uT8x+OJZL3kro9hQ="}' http://localhost:41289/alexandria/v1/send
 ```
 
 > The above command returns JSON structured like this:
@@ -229,7 +226,7 @@ curl "http://localhost:41289/alexandria/v1/send"
 {
     "status": "success",
     "response": [
-        "<code>florincoin tx-id of publisher announcement</code>"
+        "bf3c92f97728a4f0875cd837af0851cd340d855346928dc047157a07cf874214"
     ]
 }
 ```
@@ -370,65 +367,48 @@ api.kittens.get()
 ```
 
 ```shell
-curl "http://libraryd.alexandria.io/alexandria/v1/search"
+curl -X POST -H "Content-Type: application/json" --data '{"protocol":"media","search-on":"txid","search-for":"62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841","search-like":true}' http://libraryd.alexandria.io/alexandria/v1/search
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
 {
     "media-data": {
         "alexandria-media": {
-            "torrent": "QmTHG1ieXUA9a8cEMzEAR9qC7B2DXMCtmZZdwYQhdJc4HZ",
+            "torrent": "QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S",
             "publisher": "FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH",
-            "timestamp": 1445935671000,
-            "type": "music",
+            "timestamp": 1444032978000,
+            "type": "video",
             "info": {
-                "title": "Tiny Human",
+                "title": "Tiny Human Music Video",
                 "description": "Tiny Human ISRCGBJPX1500151 Tiny Human (instrumental) ISRCGBJPX1500152 Published by Megaphonic Publishing Record label - Megaphonic Records copyright 2015 for information on use of sync please contact Info@imogenheap.com",
                 "year": 2015,
-                    "extra-info": {
-                        "Bitcoin Address": "16diWTDN8DUxsX994WzyNAotVp36qBqXku",
-                        "DHT Hash": "QmTHG1ieXUA9a8cEMzEAR9qC7B2DXMCtmZZdwYQhdJc4HZ",
-                        "artist": "Imogen Heap",
-                        "company": "Megaphonic Records",
-                        "coverArt": "Imogen_Heap_Tiny_Human_cover.jpg",
-                        "element1": {
-                            "flac": "Imogen_Heap_Tiny_Human.flac",
-                            "mp3": "Imogen_Heap_Tiny_Human.mp3",
-                            "name": "Tiny Human"
-                        },
-                        "filename": "Imogen_Heap_Tiny_Human.mp3",
-                        "pwyw": "1,0.6",
-                        "runtime": 260,
-                        "tags": "Mycelia"
-                    }
-                },
-                "payment": {
-                    "amount": "1,10,50",
-                    "currency": "USD",
-                    "pinners": {
-                        "disc_amount": "50",
-                        "disc_thresh": "1000",
-                        "free": "500"
-                    },
-                    "pricing": {
-                        "element1": "6,10,700,990"
-                    },
-                    "promoters": "10",
-                    "sug_tip": "1,11,51",
-                    "type": "tip"
-                },
-                "extras": ""
+                "extra-info": {
+                    "Bitcoin Address": "16diWTDN8DUxsX994WzyNAotVp36qBqXku",
+                    "DHT Hash": "QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S",
+                    "artist": "Imogen Heap",
+                    "collection": "Tiny Human",
+                    "company": "Megaphonic Records",
+                    "filename": "Imogen Heap - Tiny Human Video-H264 720P web.m4v",
+                    "posterFrame": "Imogen Heap - Tiny-Human-Video-poster-frame.jpg",
+                    "runtime": 261,
+                    "tags": "Mycelia, Sennheiser, Music Videos"
+                }
             },
-            "signature": "H27r7UxUb8BozjEvV0v++nCyRI7S6yyroeKCJQpgU5NO3CP6FpXWs5kCxy8vhmMhbtpj/FMj+8s3+updw7g+bmE="
+            "payment": {
+                "amount": "2,50,200",
+                "currency": "USD",
+                "type": "tip"
+            },
+            "extras": ""
+        },
+        "signature": "HxzC3DclNtMAT+S0cLqqPCMJMsJEfwB2DKQrllvIgpa5EwYSQokG5eDtbvV8j51aousz1yxXYrc1Ob+B5gxU4ms="
     },
-    "txid": "fc9220025df5f2bf76fcda8f66bced4c95846e136ff3f5ff4c36fede3a5e3fc5",
-    "block": 1440095,
+    "txid": "62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841",
+    "block": 1400090,
     "publisher-name": "Imogen Heap"
 }
-]
 ```
 
 This endpoint retrieves all Artifacts in the Alexandria library index that match the search criteria.
@@ -442,7 +422,7 @@ This endpoint retrieves all Artifacts in the Alexandria library index that match
 Parameter | Description
 --------- | -----------
 protocol | "<code>media</code>"
-search-on | "<code>publisher</code>", "<code>timestamp</code>", "<code>type</code>",or "<code>*</code>" to search all fields
+search-on | "<code>publisher</code>", "<code>timestamp</code>", "<code>type</code>","<code>block</code>","<code>txid</code>" or "<code>*</code>" to search all fields
 search-for | "<code>search string</code>"
 
 ### Optional URL Parameters
@@ -476,8 +456,7 @@ api.kittens.get(2)
 ```
 
 ```shell
-curl "http://localhost:41289/alexandria/v1/sign"
-  -H "Authorization: meowmeowmeow"
+curl -X POST -H "Content-Type: application/json" --data '{"address":"FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH","text":"QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S-FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH-1444032978000"}' http://localhost:41289/alexandria/v1/sign
 ```
 
 > The above command returns JSON structured like this:
@@ -486,7 +465,7 @@ curl "http://localhost:41289/alexandria/v1/sign"
 {
     "status": "success",
     "response": [
-        "<signature>"
+        "HxzC3DclNtMAT+S0cLqqPCMJMsJEfwB2DKQrllvIgpa5EwYSQokG5eDtbvV8j51aousz1yxXYrc1Ob+B5gxU4ms="
     ]
 }
 ```
@@ -527,8 +506,7 @@ api.kittens.get(2)
 ```
 
 ```shell
-curl "http://localhost:41289/alexandria/v1/send"
-  -H "Authorization: meowmeowmeow"
+curl -X POST -H "Content-Type: application/json" --data '{"media-data":{"alexandria-media":{"torrent":"QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S","publisher":"FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH","timestamp":1444032978000,"type":"video","info":{"title":"Tiny Human Music Video","description":"Tiny Human ISRCGBJPX1500151 Tiny Human (instrumental) ISRCGBJPX1500152 Published by Megaphonic Publishing Record label - Megaphonic Records copyright 2015 for information on use of sync please contact Info@imogenheap.com","year":2015,"extra-info":{"Bitcoin Address":"16diWTDN8DUxsX994WzyNAotVp36qBqXku","DHT Hash":"QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S","artist":"Imogen Heap","collection":"Tiny Human","company":"Megaphonic Records","filename":"Imogen Heap - Tiny Human Video-H264 720P web.m4v","posterFrame":"Imogen Heap - Tiny-Human-Video-poster-frame.jpg","runtime":261,"tags":"Mycelia, Sennheiser, Music Videos"}},"payment":{"amount":"2,50,200","currency":"USD","type":"tip"},"extras":""},"signature":"HxzC3DclNtMAT+S0cLqqPCMJMsJEfwB2DKQrllvIgpa5EwYSQokG5eDtbvV8j51aousz1yxXYrc1Ob+B5gxU4ms="}}' http://localhost:41289/alexandria/v1/send
 ```
 
 > The above command returns JSON structured like this:
@@ -537,7 +515,10 @@ curl "http://localhost:41289/alexandria/v1/send"
 {
     "status": "success",
     "response": [
-        "<florincoin tx-id of artifact's main tx>"
+        "62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841",
+        "991cbd71e06e6b810fddf65cbcdee9221045b1d44436b48916635199d35c9237",
+        "fe29a84e2e29b4bf97ef73678a7f669edfa9537de23ba112c6f278d6defdf1cf",
+        "014cd6b04d5abda8a05b5c8aa3e1e06916cc97247e6d30c6b610556957d67bd9"
     ]
 }
 ```
