@@ -31,13 +31,6 @@ Follow these instructions to run install Daemons locally so you can run these AP
 
 ## Get All Publishers
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
 import requests
 
@@ -77,17 +70,11 @@ This endpoint retrieves all Publishers in the Alexandria library index.
 `GET http://libraryd.alexandria.io/alexandria/v1/publisher/get/all`
 
 <aside class="success">
-Note — if you have Libraryd running locally, you can also use this local API endpoint:<code>GET http://localhost:41289/alexandria/v1/publisher/get/all</code>
+Note — if you have Libraryd running locally, you can also use this local API endpoint:<br>
+<code>GET http://localhost:41289/alexandria/v1/publisher/get/all</code>
 </aside>
 
 ## Get a Specific Publisher
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
 
 ```python
 import requests, json
@@ -147,23 +134,18 @@ The POST data should be a json encoded string
 </aside>
 
 <aside class="success">
-Note — if you have Libraryd running locally, you can also use this local API endpoint:<code>GET http://localhost:41289/alexandria/v1/search</code>
+Note — if you have Libraryd running locally, you can also use this local API endpoint:<br> 
+<code>GET http://localhost:41289/alexandria/v1/search</code>
 </aside>
 
 ## Sign Publisher Announcement Message
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
 ```python
-import kittn
+import requests, json
+payload = {'address': 'FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH', 'text': 'Imogen Heap-FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH-1443896107000'}
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+r = requests.post("http://libraryd.alexandria.io/alexandria/v1/sign", data=json.dumps(payload))
+print(r.text)
 ```
 
 ```shell
@@ -202,18 +184,12 @@ The POST data should be a json encoded string
 
 ## Announce New Publisher
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
 ```python
-import kittn
+import requests, json
+payload = {'alexandria-publisher':{'name':'Imogen Heap','address':'FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH','timestamp':1443896107000,'emailmd5':'06b762d6e133b3dee9a62575a3babf1f','bitmessage':''},'signature':'H/7+wbTjR87fv2Qy96jp3oCfBdu9o/D5rzgA74UGSb/4f0iACwd/5YyehJ0y/uSaRwW3Tk6uT8x+OJZL3kro9hQ='}
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+r = requests.post("http://localhost:41289/alexandria/v1/send", data=json.dumps(payload))
+print(r.text)
 ```
 
 ```shell
@@ -264,18 +240,11 @@ For the new Publisher announcement to be considered valid, the <code>bitmessage<
 
 ## Get All Artifacts
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('http://libraryd.alexandria.io/alexandria/v1/media/get/all')
+r.json()
 ```
 
 ```shell
@@ -347,23 +316,18 @@ This endpoint retrieves all Artifacts in the Alexandria library index.
 `GET http://libraryd.alexandria.io/alexandria/v1/media/get/all`
 
 <aside class="success">
-Note — if you have Libraryd running locally, you can also use this local API endpoint:<code>GET http://localhost:41289/alexandria/v1/media/get/all</code>
+Note — if you have Libraryd running locally, you can also use this local API endpoint:<br>
+<code>GET http://localhost:41289/alexandria/v1/media/get/all</code>
 </aside>
 
 ## Get a Specific Artifact
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests, json
+payload = {'protocol': 'media', 'search-on': 'txid', 'search-for': '62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841'}
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.post("http://libraryd.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
+print(r.text)
 ```
 
 ```shell
@@ -441,18 +405,12 @@ Note — if you have Libraryd running locally, you can also use this local API e
 
 ## Sign Artifact Publish Message
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
 ```python
-import kittn
+import requests, json
+payload = {'address': 'FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH', 'text': 'QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S-FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH-1444032978000'}
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+r = requests.post("http://libraryd.alexandria.io/alexandria/v1/sign", data=json.dumps(payload))
+print(r.text)
 ```
 
 ```shell
@@ -491,18 +449,12 @@ The POST data should be a json encoded string
 
 ## Publish New Artifact
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
 ```python
-import kittn
+import requests, json
+payload = {'media-data':{'alexandria-media':{'torrent':'QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S','publisher':'FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH','timestamp':1444032978000,'type':'video','info':{'title':'Tiny Human Music Video','description':'Tiny Human ISRCGBJPX1500151','year':2015,'extra-info':{'Bitcoin Address':'16diWTDN8DUxsX994WzyNAotVp36qBqXku','DHT Hash':'QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S','artist':'Imogen Heap','collection':'Tiny Human','company':'Megaphonic Records','filename':'Imogen Heap - Tiny Human Video-H264 720P web.m4v','posterFrame':'Imogen Heap - Tiny-Human-Video-poster-frame.jpg','runtime':261,'tags':'Mycelia, Sennheiser, Music Videos'}},'payment':{'amount':'2,50,200','currency':'USD','type':'tip'},'extras':''}},'signature':'H/7+wbTjR87fv2Qy96jp3oCfBdu9o/D5rzgA74UGSb/4f0iACwd/5YyehJ0y/uSaRwW3Tk6uT8x+OJZL3kro9hQ='}
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+r = requests.post("http://localhost:41289/alexandria/v1/send", data=json.dumps(payload))
+print(r.text)
 ```
 
 ```shell
@@ -583,23 +535,15 @@ ptpDiscAmount | "<code>Discount Rate for Pin to Play Users beyond the Free Thres
 The POST data should be a json encoded string
 </aside>
 
-
 # Florincoin
 
 ## Get Market Data
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('http://libraryd.alexandria.io:41290/flo-market-data/v1/getAll')
+r.json()
 ```
 
 ```shell
@@ -632,18 +576,11 @@ Note — if you have Libraryd running locally, you can also use this local API e
 
 ## Get Blockchain Mining Info
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('http://florincoin.alexandria.io/getMiningInfo')
+r.json()
 ```
 
 ```shell
@@ -680,18 +617,11 @@ Note — if you have Libraryd running locally, you can also use this local API e
 
 ## Get Rental Data for Scrypt Rigs from Miningrigrentals.com (third party service)
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('https://www.miningrigrentals.com/api/v1/rigs?method=list&type=scrypt&max_cost=0.00001')
+r.json()
 ```
 
 ```shell
@@ -740,22 +670,16 @@ Note — the specific arguments in this endpoint are intended to reveal only the
 
 ## Search Florincoin tx-comments
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests, json
+payload = {'search': 'Alexandria', 'page': 0, 'results-per-page': 5}
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.post("http://florincoin.alexandria.io:5831/searchTxComment", data=json.dumps(payload))
+print(r.text)
 ```
 
 ```shell
-curl "http://florincoin.alexandria.io:5831/searchTxComment"
+curl -X POST -H "Content-Type: application/json" --data '{"search":"Alexandria","page":0,"results-per-page":5}' http://florincoin.alexandria.io:5831/searchTxComment
 ```
 
 > The above command returns JSON structured like this:
@@ -763,8 +687,8 @@ curl "http://florincoin.alexandria.io:5831/searchTxComment"
 ```json
 [
     {
-        "Hash": "a79bdd6532bfab790fb30eaa8a1751fe54bf2011ef08d8da9be9ca2fcbc04475",
-        "Message": "alexandria-media-multipart(1,2,FKVt3L7z6z8QDVG35Kif3tsReWACmNQVo7,c5834dc707fe9ea1f44c74064fd53313a688588020cacb5691e642a0531fdb79,IBBeLPqfwPFYfJQbGDDzMLl1CzDAql+vK1mjIz5XsejcCS5Okfi9ETKxXr3AGcvtu7bEZLHk0sIAcYFEqyESl9c=):nfo\":\n      {\n        \"DHT Hash\":\"QmWRkWn9NPA1zY1FobYqPSWaBjgj3rqZjVNJEdik5122fD\",\n        \"element1\":\n        {\n          \"name\":\"Chick-A-Layin Instrumental\",\n          \"flac\":\"chick-a-layin.flac\"\n        }\n      }\n    }  \n  },\n  \"signature\":\"H8+kK8I2zVwui5adAWvpUVn4WI"
+        "Hash": "03c4527decc9b305b4376398082b0f2392df53b636f9db4725d8959c7643d437",
+        "Message": "{title: 'Alexandria', term: project alexandria, type: search}"
     }
 ]
 ```
@@ -791,18 +715,12 @@ The POST data should be a json encoded string
 
 ## Get TradeBot Balance for Alexandria.io node
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('http://tradebot.alexandria.io/flobalance')
+r.json()
+print(r.text)
 ```
 
 ```shell
@@ -823,13 +741,6 @@ This endpoint retrieves the number of Florincoin tokens available for BTC-FLO tr
 
 ## Get A Bitcoin Address from Alexandria.io's TradeBot node
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
 import kittn
 
@@ -838,7 +749,7 @@ api.kittens.get()
 ```
 
 ```shell
-curl "http://tradebot.alexandria.io/depositaddress?floaddress={floaddress}&raw"
+curl "http://tradebot.alexandria.io/depositaddress?floaddress=FSZm9tRgH4XDfeTvQPmMq7M8ZVDsyW2utQ&raw"
 ```
 
 > The above command returns JSON structured like this:
