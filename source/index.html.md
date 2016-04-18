@@ -226,7 +226,7 @@ timestamp | <code>unixtime</code>,
 bitmessage | "<code>bitmessage address</code>",
 emailmd5 | "<code>md5 hash of email</code>"
  | },
-signature | "<code>signature</code>"
+signature | "<a href="#sign-publisher-announcement-message">signature</a>"
 
 <aside class="success">
 The POST data should be a json encoded string
@@ -400,7 +400,8 @@ The POST data should be a json encoded string
 </aside>
 
 <aside class="success">
-Note — if you have Libraryd running locally, you can also use this local API endpoint:<code>POST http://localhost:41289/alexandria/v1/search</code>
+Note — if you have Libraryd running locally, you can also use this local API endpoint:<br>
+<code>POST http://localhost:41289/alexandria/v1/search</code>
 </aside>
 
 ## Sign Artifact Publish Message
@@ -475,7 +476,7 @@ curl -X POST -H "Content-Type: application/json" --data '{"media-data":{"alexand
 }
 ```
 
-This endpoint is used to announce a new Publisher using the signature created by the previous endpoint.
+This endpoint is used to announce a new Artifact using the signature created by the previous endpoint.
 
 <aside class="warning">This endpoint currently communicates only with a local wallet via RCP. To use it, install Librarian and turn on <code>Florincoin</code> and <code>Libraryd</code>.</aside>
 
@@ -501,7 +502,7 @@ extra-info | {
 filename | "<code>file name[]</code>",
 runtime | "<code>file runtime[]</code>"
  | }}}, 
-signature | "<code>signature</code>" 
+signature | "<a href="#sign-artifact-publish-message">signature</a>" 
 
 ### Optional URL Parameters
 
@@ -534,6 +535,109 @@ ptpDiscAmount | "<code>Discount Rate for Pin to Play Users beyond the Free Thres
 <aside class="success">
 The POST data should be a json encoded string
 </aside>
+
+## Sign an Artifact Deactivation Message
+
+```python
+import requests, json
+payload = {'address':'F6yEsikfYQPRAEL8FfDzumLqPD9WDPmKtK','text':'F6yEsikfYQPRAEL8FfDzumLqPD9WDPmKtK-eac32af20eb7452067604b259c2acbebb81274a9321a1f99b980dc561df98b57'}
+
+r = requests.post("http://localhost:41289/alexandria/v1/sign", data=json.dumps(payload))
+print(r.text)
+```
+
+```shell
+curl -X POST -H "Content-Type: application/json" --data '{"address":"F6yEsikfYQPRAEL8FfDzumLqPD9WDPmKtK","text":"F6yEsikfYQPRAEL8FfDzumLqPD9WDPmKtK-fce07bfd598949026719e9243868c3ff755884a8d80d7de655a784ba282cb1a9"}' http://localhost:41289/alexandria/v1/sign
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "status":"success",
+    "response": [
+        "H+WWxpgJ+MdwlP5c/f4dsdii9Bc6cZwUVu4Mu5X7RSLUUgBtEZ6EL0H3rpwkch/qqTTJXUMYd4lTGNebf3nndV8="
+    ]
+}
+```
+
+> Note, if any user other than the actual Publisher of an Artifact attempts to run this step, they will receive the following error message:
+
+```json
+{
+    "status":"failure",
+    "response": [
+        "couldn't sign message with address FB2h62qtDpGuag7BAzwvuFwmRZUiVPhnv5"
+    ]
+}
+```
+
+This endpoint is used to sign an Artifact Deactivation message. Note, only the user who Published the Artifact may deactivate it.
+
+<aside class="warning">This endpoint currently communicates only with a local wallet via RCP. To use it, install Librarian and turn on <code>Florincoin</code> and <code>Libraryd</code>.</aside>
+
+### HTTP Request
+
+`POST http://localhost:41289/alexandria/v1/sign`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+address | "<code>florincoin address</code>"
+text | "<code>florincoin address</code>-<code>artifact txid</code>"
+
+<aside class="success">
+The POST data should be a json encoded string
+</aside>
+
+## Deactivate an Artifact
+
+```python
+import requests, json
+payload = {'alexandria-deactivation':{'address':'F6yEsikfYQPRAEL8FfDzumLqPD9WDPmKtK','txid':'96f10338e371c1f6ad5dbe886cf9ea891f1bbee70c76ac30c5fa8ebce9365784'},'signature':'H+WWxpgJ+MdwlP5c/f4dsdii9Bc6cZwUVu4Mu5X7RSLUUgBtEZ6EL0H3rpwkch/qqTTJXUMYd4lTGNebf3nndV8='}
+
+r = requests.post("http://localhost:41289/alexandria/v1/send", data=json.dumps(payload))
+print(r.text)
+```
+
+```shell
+curl -X POST -H "Content-Type: application/json" --data '{"alexandria-deactivation":{"address":"F6yEsikfYQPRAEL8FfDzumLqPD9WDPmKtK","txid":"96f10338e371c1f6ad5dbe886cf9ea891f1bbee70c76ac30c5fa8ebce9365784"},"signature":"H+WWxpgJ+MdwlP5c/f4dsdii9Bc6cZwUVu4Mu5X7RSLUUgBtEZ6EL0H3rpwkch/qqTTJXUMYd4lTGNebf3nndV8="}' http://localhost:41289/alexandria/v1/send
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "status": "success",
+    "response": [
+        "332cb594cb7e5504dcffb9973cdb5ea643b06252c879a3a5e2975b6386cfa84b"
+    ]
+}
+```
+
+This endpoint is used to deactivate an Artifact currently in the Alexandria library. Note, only the user who Published the Artifact may deactivate it.
+
+<aside class="warning">This endpoint currently communicates only with a local wallet via RCP. To use it, install Librarian and turn on <code>Florincoin</code> and <code>Libraryd</code>.</aside>
+
+### HTTP Request
+
+`POST http://localhost:41289/alexandria/v1/send`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+alexandria-deactivation | {
+address | "<code>florincoin address</code>",
+txid | "<code>artifact txid</code>"
+ | }, 
+signature | "<a href="#sign-an-artifact-deactivation-message">signature</a>"
+
+<aside class="success">
+The POST data should be a json encoded string
+</aside>
+
 
 # Florincoin
 
@@ -742,10 +846,11 @@ This endpoint retrieves the number of Florincoin tokens available for BTC-FLO tr
 ## Get A Bitcoin Address from Alexandria.io's TradeBot node
 
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('http://tradebot.alexandria.io/depositaddress?floaddress=FSZm9tRgH4XDfeTvQPmMq7M8ZVDsyW2utQ&raw')
+r.json()
+print(r.text)
 ```
 
 ```shell
@@ -774,22 +879,16 @@ floaddress | "<code>florincoin receiving address for deposit from trade</code>"
 Note — if you exclude <code>raw</code> from the endpoint, html code will be returned, including an <code>img src</code> of the QR code for the Bitcoin address.
 </aside>
 
-# No-Accounts Mining Pool
+# Mining Pool
 
 ## Get Alexandria's Pool Stats
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('http://pool.alexandria.media/api/stats')
+r.json()
+print(r.text)
 ```
 
 ```shell
@@ -856,18 +955,12 @@ This endpoint retrieves current summary stats for the Alexandria mining pool, in
 
 ## Get Last 24 Hours of Alexandria's Pool Stats
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('http://pool.alexandria.media/api/pool_stats')
+r.json()
+print(r.text)
 ```
 
 ```shell
@@ -903,22 +996,16 @@ This endpoint retrieves the past 24 hours of summary stats for the Alexandria mi
 
 ## Get Alexandria's Pool Live Stats
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+r = requests.get('http://pool.alexandria.io/api/live_stats')
+r.json()
+print(r.text)
 ```
 
 ```shell
-curl "http://pool.alexandria.media/api/pool_stats"
+curl "http://pool.alexandria.io/api/live_stats"
 ```
 
 > The above command returns JSON structured like this:
@@ -979,7 +1066,7 @@ This endpoint retrieves live summary stats for the Alexandria mining pool, inclu
 
 ### HTTP Request
 
-`GET http://pool.alexandria.media/api/pool_stats`
+`GET http://pool.alexandria.io/api/live_stats`
 
 
 
