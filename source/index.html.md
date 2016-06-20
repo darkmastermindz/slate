@@ -879,6 +879,178 @@ floaddress | "<code>florincoin receiving address for deposit from trade</code>"
 Note — if you exclude <code>raw</code> from the endpoint, html code will be returned, including an <code>img src</code> of the QR code for the Bitcoin address.
 </aside>
 
+# Using the Client Library (Javascript)
+Alexandria is comprised of many different components, each of which have some deep and complex APIs.
+
+Luckily, there's a set of Javascript files available to ease the pain:
+
+ - **SimpleWallet.js** - Used for **FloVault** client-side wallet (forked from LiteVault)
+ - **libraryd-js.js** - A light wrapper over the FloVault and publisher APIs for publishing
+ - **ipfs.js** - A wrapper for interacting with IPFS.
+ - **publishArtifact.js** - This isn't a library, however there's a lot of important code related to the publishing process in here.
+
+## Using FloVault
+
+
+```javascript
+// Initialize a FloVault instance
+var wallet = new Wallet(your_identifier, your_password);
+
+wallet.load(function() {
+    console.log('Wallet was loaded');
+});
+// You will need to run refreshBalances before you make any transactions
+// so it is recommended to have this run on some form of timer.
+// 60 seconds is probably good enough
+setInterval(60000, wallet.refreshBalances);
+```
+
+If you don't want to set up a FloVault node locally, you can use the node running for Alexandria.IO - by
+default, the **SimpleWallet.js** is pre-configured to use Alexandria's own server. Don't worry, it's all
+client side, we just host an encrypted copy of your wallet for easy access.
+
+If you wish to change this, you'll need to modify `flovaultBaseURL` and/or `florinsightBaseURL` (block explorer used)
+in SimpleWallet.js
+
+You need to register for a wallet, and note down the identifier.
+
+Once you've registered, you can use the wallet in your code simply by using the JS code on the right:
+
+
+<aside class="error">
+Note — if you attempt to use the SimpleWallet.js code server-side (i.e. NodeJS), you will run into issues,
+as it is bound to jQuery, SWAL (alert system), and uses localStorage for certain caching.
+</aside>
+
+
+## Sending transactions using FloVault
+
+FloVault was modified from the original to include comments, as those are the key feature of FlorinCoin.
+
+To send coins (required to create a comment), you can use the `sendCoins` function. This will build a transaction
+locally, and then broadcast it to the defined `florinsightBaseURL` defined in SimpleWallet.js
+
+```javascript
+
+wallet.sendCoins('Fabcd', 'Fbcdc', 3.1415, "Florin Comment", function(err,data) {
+    if(err) {
+        return console.error('failed to send transaction');
+    }
+    return console.log('successfully send transaction. TXID: ', data);
+});
+```
+
+### wallet.sendCoins(fromAddress, toAddress, amount, txComment, callback)
+
+Parameter | Description
+--------- | -----------
+fromAddress | A public address inside of `wallet` to be used to send the coins
+toAddress | The receiver of the coins
+amount | Amount of florincoins to send (decimal, i.e. 0.1 == 0.1 florincoins) 
+txComment | Comment for the transaction
+callback | A callback in the form of (err,data), where data is the TXID on success
+
+
+## Putting files onto IPFS
+
+```javascript
+// Alexandria.IO's IPFS node. WARNING THIS IP MAY CHANGE IN FUTURE
+ipfs.setProvider({host: '163.172.10.4', port: '5001', protocol: 'http'});
+
+var file_input = document.getElementById('my_file_input');
+ipfs.add(file_input, function(err,hashes) {
+    if(err || !hashes) {
+        return console.error('there was an error uploading your file(s):', err); 
+    }
+    // note that hashes is an array of IPFS DHT hashes
+    return hashes
+});
+
+```
+
+Inside of `ipfs.js` we have a function called **add**. This encodes the data from a file form input, or DropZone
+and publishes it to the configured IPFS node. By default, this would be the IPFS node running on Alexandria.IO
+
+The file contains many other useful IPFS functions, however adding files is the most important part
+of publishing.
+
+### ipfs.add(files, callback)
+
+Parameter | Description
+--------- | -----------
+files | A standard HTML file input, containing one or more files
+callback | A callback in the form of (err,hashes), where hashes is an array of the DHT hashes
+
+## Publishing a file
+
+Publishing a file combines FloVault's client side code, IPFS client side code, Florinsight behind the scenes for balances, 
+as well as the publisher API to finalize it.
+
+The first step is to upload each file to IPFS (see the previous section) that is used by your artifact, such as posters
+cover art, album art, and the actual content. Make sure you save the hashes after each upload.
+
+```javascript
+var yourPublisherAddress = 'Fxxx...';
+// -*- Put the files into IPFS
+var hashes = {};
+// main content
+ipfs.add(the_movie, function(err,data) { 
+    if(err) return console.error('error');
+    hashes['the_movie'] = data[0];
+});
+// any additional files
+ipfs.add(poster, function(err,data) { ... });
+ipfs.add(cover, function(err,data) { ... });
+```
+
+Next, you'll need to generate a JSON artifact. This is an object which contains various metadata about your content
+and where to find that content (i.e. IPFS hashes), along-side meta-content such as cover images, posters, and album art.
+
+```javascript
+// -*- Build the artifact. Insert hashes from earlier
+var artifact = {
+    'media-data': {
+        torrent: hashes['the_movie'].Hash, // DHT hash from IPFS
+        timestamp: Date.now(),
+        type: "video",
+        publisher: yourPublisherAddress,
+        payment: {
+            // see Publishing an Artifact for payment data
+        }
+        info: {
+            title: "My Movie",
+            description: "This is my movie",
+            "extra-info": {
+                "DHT Hash": hashes['the_movie'].Hash,
+                filename: hashes['the_movie'].Name,
+                files: []
+            }
+        }
+    }
+}
+
+```
+
+You can find the schema for the JSON artifact under [Publish New Artifact](#publish-new-artifact)
+
+Once you've produced your artifact, you can pass the data to libraryd-js' `publishArtifact`. You'll also need a FloVault
+instance at hand, as it will cost some FlorinCoin to publish. 
+
+Be aware publishArtifact will automatically handle the transactions for you (as long as your FloVault is loaded, as per the previous section);
+you don't need to worry about creating them. It will also automatically attempt to sign your artifact using the publisher API.
+
+```javascript
+// -*- Now publish the artifact we've built, using FloVault + the publisher API
+LibraryDJS.publishArtifact(wallet, hashes['the_movie'].Hash, yourPublisherAddress, artifact, function(err, data)
+{
+    if(err) {
+        return console.error('error publishing artifact: ', err);
+    }
+    return console.log('Successfully published your artifact');
+}
+```
+
+
 # Mining Pool
 
 ## Get Alexandria's Pool Stats
