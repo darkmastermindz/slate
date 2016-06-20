@@ -34,12 +34,12 @@ Follow these instructions to run install Daemons locally so you can run these AP
 ```python
 import requests
 
-r = requests.get('http://libraryd.alexandria.io/alexandria/v1/publisher/get/all')
+r = requests.get('https://libraryd.alexandria.io/alexandria/v1/publisher/get/all')
 r.json()
 ```
 
 ```shell
-curl "http://libraryd.alexandria.io/alexandria/v1/publisher/get/all"
+curl "https://libraryd.alexandria.io/alexandria/v1/publisher/get/all"
 ```
 
 > The above command returns JSON structured like this:
@@ -67,7 +67,7 @@ This endpoint retrieves all Publishers in the Alexandria library index.
 
 ### HTTP Request
 
-`GET http://libraryd.alexandria.io/alexandria/v1/publisher/get/all`
+`GET https://libraryd.alexandria.io/alexandria/v1/publisher/get/all`
 
 <aside class="success">
 Note — if you have Libraryd running locally, you can also use this local API endpoint:<br>
@@ -80,12 +80,12 @@ Note — if you have Libraryd running locally, you can also use this local API e
 import requests, json
 payload = {'protocol': 'publisher', 'search-on': 'name', 'search-for': 'Imogen Heap'}
 
-r = requests.post("http://libraryd.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
+r = requests.post("https://libraryd.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
 print(r.text)
 ```
 
 ```shell
-curl -X POST -H "Content-Type: application/json" --data '{"protocol":"publisher","search-on":"name","search-for":"Imogen Heap" }' http://libraryd.alexandria.io/alexandria/v1/search
+curl -X POST -H "Content-Type: application/json" --data '{"protocol":"publisher","search-on":"name","search-for":"Imogen Heap" }' https://libraryd.alexandria.io/alexandria/v1/search
 ```
 
 > The above command returns JSON structured like this:
@@ -113,7 +113,7 @@ This endpoint retrieves a specific Publisher.
 
 ### HTTP Request
 
-`POST http://libraryd.alexandria.io/alexandria/v1/search`
+`POST https://libraryd.alexandria.io/alexandria/v1/search`
 
 ### URL Parameters
 
@@ -144,7 +144,7 @@ Note — if you have Libraryd running locally, you can also use this local API e
 import requests, json
 payload = {'address': 'FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH', 'text': 'Imogen Heap-FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH-1443896107000'}
 
-r = requests.post("http://libraryd.alexandria.io/alexandria/v1/sign", data=json.dumps(payload))
+r = requests.post("https://libraryd.alexandria.io/alexandria/v1/sign", data=json.dumps(payload))
 print(r.text)
 ```
 
@@ -243,12 +243,12 @@ For the new Publisher announcement to be considered valid, the <code>bitmessage<
 ```python
 import requests
 
-r = requests.get('http://libraryd.alexandria.io/alexandria/v1/media/get/all')
+r = requests.get('https://libraryd.alexandria.io/alexandria/v1/media/get/all')
 r.json()
 ```
 
 ```shell
-curl "http://libraryd.alexandria.io/alexandria/v1/media/get/all"
+curl "https://libraryd.alexandria.io/alexandria/v1/media/get/all"
 ```
 
 > The above command returns JSON structured like this:
@@ -313,7 +313,7 @@ This endpoint retrieves all Artifacts in the Alexandria library index.
 
 ### HTTP Request
 
-`GET http://libraryd.alexandria.io/alexandria/v1/media/get/all`
+`GET https://libraryd.alexandria.io/alexandria/v1/media/get/all`
 
 <aside class="success">
 Note — if you have Libraryd running locally, you can also use this local API endpoint:<br>
@@ -326,12 +326,12 @@ Note — if you have Libraryd running locally, you can also use this local API e
 import requests, json
 payload = {'protocol': 'media', 'search-on': 'txid', 'search-for': '62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841'}
 
-r = requests.post("http://libraryd.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
+r = requests.post("https://libraryd.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
 print(r.text)
 ```
 
 ```shell
-curl -X POST -H "Content-Type: application/json" --data '{"protocol":"media","search-on":"txid","search-for":"62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841","search-like":true}' http://libraryd.alexandria.io/alexandria/v1/search
+curl -X POST -H "Content-Type: application/json" --data '{"protocol":"media","search-on":"txid","search-for":"62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841","search-like":true}' https://libraryd.alexandria.io/alexandria/v1/search
 ```
 
 > The above command returns JSON structured like this:
@@ -379,7 +379,7 @@ This endpoint retrieves all Artifacts in the Alexandria library index that match
 
 ### HTTP Request
 
-`POST http://libraryd.alexandria.io/alexandria/v1/search`
+`POST https://libraryd.alexandria.io/alexandria/v1/search`
 
 ### URL Parameters
 
@@ -410,7 +410,7 @@ Note — if you have Libraryd running locally, you can also use this local API e
 import requests, json
 payload = {'address': 'FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH', 'text': 'QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S-FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH-1444032978000'}
 
-r = requests.post("http://libraryd.alexandria.io/alexandria/v1/sign", data=json.dumps(payload))
+r = requests.post("https://libraryd.alexandria.io/alexandria/v1/sign", data=json.dumps(payload))
 print(r.text)
 ```
 
