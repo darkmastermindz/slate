@@ -646,12 +646,12 @@ The POST data should be a json encoded string
 ```python
 import requests
 
-r = requests.get('http://libraryd.alexandria.io:41290/flo-market-data/v1/getAll')
+r = requests.get('https://api.alexandria.io/flo-market-data/v1/getAll')
 r.json()
 ```
 
 ```shell
-curl "http://libraryd.alexandria.io:41290/flo-market-data/v1/getAll"
+curl "https://api.alexandria.io/flo-market-data/v1/getAll"
 ```
 
 > The above command returns JSON structured like this:
@@ -672,7 +672,7 @@ This endpoint retrieves current Florincoin token market data, including its trad
 
 ### HTTP Request
 
-`GET http://libraryd.alexandria.io:41290/flo-market-data/v1/getAll`
+`GET https://api.alexandria.io/flo-market-data/v1/getAll`
 
 <aside class="success">
 Note — if you have Libraryd running locally, you can also use this local API endpoint:<code>GET http://localhost:41289/alexandria/v1/media/get/all</code>
@@ -683,12 +683,12 @@ Note — if you have Libraryd running locally, you can also use this local API e
 ```python
 import requests
 
-r = requests.get('http://florincoin.alexandria.io/getMiningInfo')
+r = requests.get('https://api.alexandria.io/florincoin/getMiningInfo')
 r.json()
 ```
 
 ```shell
-curl "http://florincoin.alexandria.io/getMiningInfo"
+curl "https://api.alexandria.io/florincoin/getMiningInfo"
 ```
 
 > The above command returns JSON structured like this:
@@ -713,7 +713,7 @@ This endpoint retrieves current Florincoin blockchain information, including its
 
 ### HTTP Request
 
-`GET http://florincoin.alexandria.io/getMiningInfo`
+`GET https://api.alexandria.io/florincoin/getMiningInfo`
 
 <aside class="success">
 Note — if you have Libraryd running locally, you can also use this local API endpoint:<code>GET http://localhost:41289/alexandria/v1/media/get/all</code>
@@ -778,12 +778,12 @@ Note — the specific arguments in this endpoint are intended to reveal only the
 import requests, json
 payload = {'search': 'Alexandria', 'page': 0, 'results-per-page': 5}
 
-r = requests.post("http://florincoin.alexandria.io:5831/searchTxComment", data=json.dumps(payload))
+r = requests.post("https://api.alexandria.io/florincoin/searchTxComment", data=json.dumps(payload))
 print(r.text)
 ```
 
 ```shell
-curl -X POST -H "Content-Type: application/json" --data '{"search":"Alexandria","page":0,"results-per-page":5}' http://florincoin.alexandria.io:5831/searchTxComment
+curl -X POST -H "Content-Type: application/json" --data '{"search":"Alexandria","page":0,"results-per-page":5}' https://api.alexandria.io/florincoin/searchTxComment
 ```
 
 > The above command returns JSON structured like this:
@@ -801,7 +801,7 @@ This endpoint retrieves all Florincoin transaction comments matching a given sea
 
 ### HTTP Request
 
-`POST http://florincoin.alexandria.io:5831/searchTxComment`
+`POST https://api.alexandria.io/florincoin/searchTxComment`
 
 ### URL Parameters
 
@@ -1058,13 +1058,13 @@ LibraryDJS.publishArtifact(wallet, hashes['the_movie'].Hash, yourPublisherAddres
 ```python
 import requests
 
-r = requests.get('http://pool.alexandria.media/api/stats')
+r = requests.get('https://api.alexandria.io/pool/api/stats')
 r.json()
 print(r.text)
 ```
 
 ```shell
-curl "http://pool.alexandria.media/api/stats"
+curl "https://api.alexandria.io/pool/api/stats"
 ```
 
 > The above command returns JSON structured like this:
@@ -1123,20 +1123,20 @@ This endpoint retrieves current summary stats for the Alexandria mining pool, in
 
 ### HTTP Request
 
-`GET http://pool.alexandria.media/api/stats`
+`GET https://api.alexandria.io/pool/api/stats`
 
 ## Get Last 24 Hours of Alexandria's Pool Stats
 
 ```python
 import requests
 
-r = requests.get('http://pool.alexandria.media/api/pool_stats')
+r = requests.get('https://api.alexandria.io/pool/api/pool_stats')
 r.json()
 print(r.text)
 ```
 
 ```shell
-curl "http://pool.alexandria.media/api/pool_stats"
+curl "https://api.alexandria.io/pool/api/pool_stats"
 ```
 
 > The above command returns JSON structured like this:
@@ -1164,20 +1164,20 @@ This endpoint retrieves the past 24 hours of summary stats for the Alexandria mi
 
 ### HTTP Request
 
-`GET http://pool.alexandria.media/api/pool_stats`
+`GET https://api.alexandria.io/pool/api/pool_stats`
 
 ## Get Alexandria's Pool Live Stats
 
 ```python
 import requests
 
-r = requests.get('http://pool.alexandria.io/api/live_stats')
+r = requests.get('https://api.alexandria.io/pool/api/live_stats')
 r.json()
 print(r.text)
 ```
 
 ```shell
-curl "http://pool.alexandria.io/api/live_stats"
+curl "https://api.alexandria.io/pool/api/live_stats"
 ```
 
 > The above command returns JSON structured like this:
@@ -1238,7 +1238,7 @@ This endpoint retrieves live summary stats for the Alexandria mining pool, inclu
 
 ### HTTP Request
 
-`GET http://pool.alexandria.io/api/live_stats`
+`GET https://api.alexandria.io/pool/api/live_stats`
 
 
 
