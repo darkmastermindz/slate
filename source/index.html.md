@@ -1241,6 +1241,77 @@ This endpoint retrieves live summary stats for the Alexandria mining pool, inclu
 `GET https://api.alexandria.io/pool/api/live_stats`
 
 
+# Payment Processor
 
+## Test payment processor is running
 
+This is a simple test to check whether the service is running.
 
+### HTTP Request
+
+`GET https://api.alexandria.io/payproc/ping`
+
+```shell
+curl https://api.alexandria.io/payproc/ping
+```
+
+>If running, the request returns
+
+```text
+ALIVE
+```
+
+## Retrieve payment address
+
+### HTTP Request
+
+`GET https://api/alexandria.io/payproc/receive?address=bitcoin_address&amount=bitcoin_amount`
+
+To generate a receive address for payments, use /payproc/receive.
+
+### Parameters:
+
+**address** Address to receive coins
+
+**amount** Amount to send to address in BTC
+
+### Return:
+
+temporary address The temporary address that can be shown to the buyer.
+
+```shell
+curl "https://api.alexandria.io/payproc/receive?address=2N4ajxiM1xHc83mehV2LTXk2Z65TAfc9MhX&amount=0.432"
+```
+
+>This request returns the temporary address to receive payment.
+
+```json
+{"input_address":"2N6dDdHGx24ss6AoAqjx8gnc2JQpETe1mBp"}
+```
+
+## Check unconfirmed address balance
+
+### HTTP request
+
+`GET https://api.alexandria./payproc/getreceivedbyaddress/payment_address`
+
+Check the total amount of the *unconfirmed* balance of the given BTC address.
+
+```shell
+curl "https://api.alexandria.io/payproc/getreceivedbyaddress/2N4ajxiM1xHc83mehV2LTXk2Z65TAfc9MhX"
+```
+> The request returns the unconfirmed balance in Bitcoin.
+
+```text
+0.00000000
+```
+
+### Path Parameter:
+
+/payproc/getreceivedbyaddress/payment_address
+
+**payment_address** The temporary payment address to monitor.
+
+### Return:
+
+The unconfirmed balance in BTC.
