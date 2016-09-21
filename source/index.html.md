@@ -167,6 +167,9 @@ This endpoint is used to sign a Publisher announcement message.
 
 <aside class="warning">This endpoint currently communicates only with a local wallet via RCP. To use it, install Librarian and turn on <code>Florincoin</code> and <code>Libraryd</code>.</aside>
 
+To sign a Publisher announcement message using a web-hosted wallet, see [Using the Client Library](#using-the-client-library-javascript)
+
+
 ### HTTP Request
 
 `POST http://localhost:41289/alexandria/v1/sign`
@@ -210,6 +213,8 @@ curl -X POST -H "Content-Type: application/json" --data '{"alexandria-publisher"
 This endpoint is used to announce a new Publisher using the signature created by the previous endpoint.
 
 <aside class="warning">This endpoint currently communicates only with a local wallet via RCP. To use it, install Librarian and turn on <code>Florincoin</code> and <code>Libraryd</code>.</aside>
+
+To sign a Publisher announcement message using a web-hosted wallet, see [Using the Client Library](#using-the-client-library-javascript)
 
 ### HTTP Request
 
@@ -433,6 +438,8 @@ This endpoint is used to sign a Publisher announcement message.
 
 <aside class="warning">This endpoint currently communicates only with a local wallet via RCP. To use it, install Librarian and turn on <code>Florincoin</code> and <code>Libraryd</code>.</aside>
 
+To sign a Publisher announcement message using a web-hosted wallet, see [Using the Client Library](#using-the-client-library-javascript)
+
 ### HTTP Request
 
 `POST http://localhost:41289/alexandria/v1/sign`
@@ -479,6 +486,8 @@ curl -X POST -H "Content-Type: application/json" --data '{"media-data":{"alexand
 This endpoint is used to announce a new Artifact using the signature created by the previous endpoint.
 
 <aside class="warning">This endpoint currently communicates only with a local wallet via RCP. To use it, install Librarian and turn on <code>Florincoin</code> and <code>Libraryd</code>.</aside>
+
+To sign a Publisher announcement message using a web-hosted wallet, see [Using the Client Library](#using-the-client-library-javascript)
 
 ### HTTP Request
 
@@ -575,6 +584,8 @@ curl -X POST -H "Content-Type: application/json" --data '{"address":"F6yEsikfYQP
 This endpoint is used to sign an Artifact Deactivation message. Note, only the user who Published the Artifact may deactivate it.
 
 <aside class="warning">This endpoint currently communicates only with a local wallet via RCP. To use it, install Librarian and turn on <code>Florincoin</code> and <code>Libraryd</code>.</aside>
+
+To sign a Publisher announcement message using a web-hosted wallet, see [Using the Client Library](#using-the-client-library-javascript)
 
 ### HTTP Request
 
