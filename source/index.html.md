@@ -34,12 +34,12 @@ Follow these instructions to run install Daemons locally so you can run these AP
 ```python
 import requests
 
-r = requests.get('https://libraryd.alexandria.io/alexandria/v1/publisher/get/all')
+r = requests.get('https://api.alexandria.io/alexandria/v1/publisher/get/all')
 r.json()
 ```
 
 ```shell
-curl "https://libraryd.alexandria.io/alexandria/v1/publisher/get/all"
+curl "https://api.alexandria.io/alexandria/v1/publisher/get/all"
 ```
 
 > The above command returns JSON structured like this:
@@ -67,7 +67,7 @@ This endpoint retrieves all Publishers in the Alexandria library index.
 
 ### HTTP Request
 
-`GET https://libraryd.alexandria.io/alexandria/v1/publisher/get/all`
+`GET https://api.alexandria.io/alexandria/v1/publisher/get/all`
 
 <aside class="success">
 Note — if you have Libraryd running locally, you can also use this local API endpoint:<br>
@@ -80,7 +80,7 @@ Note — if you have Libraryd running locally, you can also use this local API e
 import requests, json
 payload = {'protocol': 'publisher', 'search-on': 'name', 'search-for': 'Imogen Heap'}
 
-r = requests.post("https://libraryd.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
+r = requests.post("https://api.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
 print(r.text)
 ```
 
@@ -113,7 +113,7 @@ This endpoint retrieves a specific Publisher.
 
 ### HTTP Request
 
-`POST https://libraryd.alexandria.io/alexandria/v1/search`
+`POST https://api.alexandria.io/alexandria/v1/search`
 
 ### URL Parameters
 
@@ -144,7 +144,7 @@ Note — if you have Libraryd running locally, you can also use this local API e
 import requests, json
 payload = {'address': 'FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH', 'text': 'Imogen Heap-FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH-1443896107000'}
 
-r = requests.post("https://libraryd.alexandria.io/alexandria/v1/sign", data=json.dumps(payload))
+r = requests.post("http://localhost:41289/alexandria/v1/sign", data=json.dumps(payload))
 print(r.text)
 ```
 
@@ -243,12 +243,12 @@ For the new Publisher announcement to be considered valid, the <code>bitmessage<
 ```python
 import requests
 
-r = requests.get('https://libraryd.alexandria.io/alexandria/v1/media/get/all')
+r = requests.get('https://api.alexandria.io/alexandria/v1/media/get/all')
 r.json()
 ```
 
 ```shell
-curl "https://libraryd.alexandria.io/alexandria/v1/media/get/all"
+curl "https://api.alexandria.io/alexandria/v1/media/get/all"
 ```
 
 > The above command returns JSON structured like this:
@@ -313,7 +313,7 @@ This endpoint retrieves all Artifacts in the Alexandria library index.
 
 ### HTTP Request
 
-`GET https://libraryd.alexandria.io/alexandria/v1/media/get/all`
+`GET https://api.alexandria.io/alexandria/v1/media/get/all`
 
 <aside class="success">
 Note — if you have Libraryd running locally, you can also use this local API endpoint:<br>
@@ -326,7 +326,7 @@ Note — if you have Libraryd running locally, you can also use this local API e
 import requests, json
 payload = {'protocol': 'media', 'search-on': 'txid', 'search-for': '62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841'}
 
-r = requests.post("https://libraryd.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
+r = requests.post("https://api.alexandria.io/alexandria/v1/search", data=json.dumps(payload))
 print(r.text)
 ```
 
@@ -379,7 +379,7 @@ This endpoint retrieves all Artifacts in the Alexandria library index that match
 
 ### HTTP Request
 
-`POST https://libraryd.alexandria.io/alexandria/v1/search`
+`POST https://api.alexandria.io/alexandria/v1/search`
 
 ### URL Parameters
 
@@ -410,7 +410,7 @@ Note — if you have Libraryd running locally, you can also use this local API e
 import requests, json
 payload = {'address': 'FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH', 'text': 'QmcZVwZ5RGamnaxwgB8ZUE9WCjG1nU9rEaDNV5wy9jJP3S-FAiWWyUEuXkxo7oQLWfD3oTWkHM6eu5JJH-1444032978000'}
 
-r = requests.post("https://libraryd.alexandria.io/alexandria/v1/sign", data=json.dumps(payload))
+r = requests.post("http://localhost:41289/alexandria/v1/sign", data=json.dumps(payload))
 print(r.text)
 ```
 
@@ -822,13 +822,13 @@ The POST data should be a json encoded string
 ```python
 import requests
 
-r = requests.get('http://tradebot.alexandria.io/flobalance')
+r = requests.get('https://api.alexandria.io/tradebot/flobalance')
 r.json()
 print(r.text)
 ```
 
 ```shell
-curl "http://tradebot.alexandria.io/flobalance"
+curl "https://api.alexandria.io/tradebot/flobalance"
 ```
 
 > The above command returns JSON structured like this:
@@ -841,20 +841,20 @@ This endpoint retrieves the number of Florincoin tokens available for BTC-FLO tr
 
 ### HTTP Request
 
-`GET http://tradebot.alexandria.io/flobalance`
+`GET https://api.alexandria.io/tradebot/flobalance`
 
 ## Get A Bitcoin Address from Alexandria.io's TradeBot node
 
 ```python
 import requests
 
-r = requests.get('http://tradebot.alexandria.io/depositaddress?floaddress=FSZm9tRgH4XDfeTvQPmMq7M8ZVDsyW2utQ&raw')
+r = requests.get('https://api.alexandria.io/tradebot/depositaddress?floaddress=FSZm9tRgH4XDfeTvQPmMq7M8ZVDsyW2utQ&raw')
 r.json()
 print(r.text)
 ```
 
 ```shell
-curl "http://tradebot.alexandria.io/depositaddress?floaddress=FSZm9tRgH4XDfeTvQPmMq7M8ZVDsyW2utQ&raw"
+curl "https://api.alexandria.io/tradebot/depositaddress?floaddress=FSZm9tRgH4XDfeTvQPmMq7M8ZVDsyW2utQ&raw"
 ```
 
 > The above command returns JSON structured like this:
@@ -867,7 +867,7 @@ This endpoint provides a Florincoin address and retreives a Bitcoin address for 
 
 ### HTTP Request
 
-`GET http://tradebot.alexandria.io/depositaddress?floaddress={floaddress}&raw`
+`GET https://api.alexandria.io/tradebot/depositaddress?floaddress={floaddress}&raw`
 
 ### URL Parameters
 
@@ -889,7 +889,7 @@ Luckily, there's a set of Javascript files available to ease the pain:
  - **ipfs.js** - A wrapper for interacting with IPFS.
  - **publishArtifact.js** - This isn't a library, however there's a lot of important code related to the publishing process in here.
 
-## Using FloVault
+## Using FloVault (https://flovault.alexandria.io/)
 
 
 ```javascript
@@ -906,7 +906,7 @@ setInterval(60000, wallet.refreshBalances);
 ```
 
 If you don't want to set up a FloVault node locally, you can use the node running for Alexandria.IO - by
-default, the **SimpleWallet.js** is pre-configured to use Alexandria's own server. Don't worry, it's all
+default, the **SimpleWallet.js** is pre-configured to use Alexandria's own server at https://flovault.alexandria.io/. Don't worry about tracking or hacking, everything happens
 client side, we just host an encrypted copy of your wallet for easy access.
 
 If you wish to change this, you'll need to modify `flovaultBaseURL` and/or `florinsightBaseURL` (block explorer used)
@@ -954,8 +954,8 @@ callback | A callback in the form of (err,data), where data is the TXID on succe
 ## Putting files onto IPFS
 
 ```javascript
-// Alexandria.IO's IPFS node. WARNING THIS IP MAY CHANGE IN FUTURE
-ipfs.setProvider({host: '163.172.10.4', port: '5001', protocol: 'http'});
+// Alexandria.IO's IPFS node. WARNING THIS ADDRESS MAY CHANGE IN FUTURE
+ipfs.setProvider({host: 'ipfs.alexandria.io', port: '443', protocol: 'https'});
 
 var file_input = document.getElementById('my_file_input');
 ipfs.add(file_input, function(err,hashes) {
