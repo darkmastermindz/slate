@@ -6,7 +6,6 @@ language_tabs:
   - python
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -20,8 +19,6 @@ search: true
 Welcome to the Alexandria API! You can use our API to access Alexandria.io API endpoints, which can get info about Publishers and Artifacts in the Alexandria library, publish to the library, and retreive other information about Alexandria's networks and blockchain tokens.
 
 We have language bindings in Shell and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
 <aside class="notice">
 Follow these instructions to run install Daemons locally so you can run these APIs in a fully decentralized way instead of relying on "Trusted Third Parties"<code>Download Librarian</code>.
@@ -85,7 +82,7 @@ print(r.text)
 ```
 
 ```shell
-curl -X POST -H "Content-Type: application/json" --data '{"protocol":"publisher","search-on":"name","search-for":"Imogen Heap" }' https://libraryd.alexandria.io/alexandria/v1/search
+curl -X POST -H "Content-Type: application/json" --data '{"protocol":"publisher","search-on":"name","search-for":"Imogen Heap" }' https://api.alexandria.io/alexandria/v1/search
 ```
 
 > The above command returns JSON structured like this:
@@ -336,7 +333,7 @@ print(r.text)
 ```
 
 ```shell
-curl -X POST -H "Content-Type: application/json" --data '{"protocol":"media","search-on":"txid","search-for":"62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841","search-like":true}' https://libraryd.alexandria.io/alexandria/v1/search
+curl -X POST -H "Content-Type: application/json" --data '{"protocol":"media","search-on":"txid","search-for":"62a63b3b59b3f5fc786ad05a37af656c88507ae959f53c233520b755aaa8a841","search-like":true}' https://api.alexandria.io/alexandria/v1/search
 ```
 
 > The above command returns JSON structured like this:
